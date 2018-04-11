@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Okoro Efe Christopher">
+	<title>Address book</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<style type="text/css">
+		p.empty, table.contactTable {
+			margin-top: 4em;
+		}
+		caption {
+			font: "dancing script", arial, serif;
+			font-size: 1em;
+		}
+		a.view {
+			cursor: pointer;
+			color: 
+		}
+		div.main {
+			border: 1px solid gray;
+			border-top: none;
+			background: #ff4;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h3 class="text text-center">Address Book</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8 main">
+				<p class="message text text-center text-danger"></p>
+	      <div class="nav-tabs-custom">
+	        <ul class="nav nav-tabs">
+	          <li class="active"><a href="#contactList" data-toggle="tab">Contacts</a></li>
+	          <li><a href="#addNew" data-toggle="tab">Add new</a></li>
+	        </ul>
+	        <div class="tab-content">
+	        	<div class="tab-pane active" id="contactList">
+	       			<div class="table-responsive">
+							  <p class="text text-center text-info empty">Address book empty.</p>
+							  <table class="table hidden contactTable table-condensed table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>S/N</th>
+											<th>Name</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
+							  </table>
+							</div>
+	          </div>
+
+	        	<div class="tab-pane" id="addNew">
+	        		<div class="addForm">
+								<form action="" method="post">
+								  <div class="form-group">
+								    <label for="name">Name</label>
+								    <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="" required>
+								  </div>
+								  <div class="form-group">
+								    <label for="email">Email</label>
+								    <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="">
+								  </div>
+								  <div class="form-group">
+								    <label for="phone">Phone</label>
+								    <input type="tel" id="phone" class="form-control" placeholder="phone" name="phone" value="" required="">
+								  </div>
+								  <div class="form-group">
+								    <label for="address">Address</label>
+								    <input type="address" id="address" class="form-control" placeholder="Address" name="address" value="">
+								  </div>
+								  <div class="form-group">
+								  	<label>Sex</label>
+								    <label>
+								      <input type="radio" name="sex" value="male"> Male
+								    </label>
+								    <label>
+								      <input type="radio" name="sex" value="female"> Female
+								    </label>
+								  </div>
+								  <button type="submit" class="submit btn btn-default">Submit</button>
+								</form>
+							</div>
+	        	</div>
+	        </div>
+	      </div>
+	    </div>
+	    <div class="col-md-4">
+	    	<div class="hidden viewContact">
+					<table class="table contactView table-condensed table-bordered table-hover">
+						<caption class="contact-name caption text-capitalize text-center"></caption>
+						<tr>
+							<th>Phone</th>
+							<td class="phone"></td>
+						</tr>
+						<tr>
+							<th>Email</th>
+							<td class="email"></td>
+						</tr>
+						<tr>
+							<th>Address</th>
+							<td class="address"></td>
+						</tr>
+						<tr>
+							<th>Sex</th>
+							<td class="sex"></td>
+						</tr>
+					</table>
+					<button class="edit btn btn-warning">Edit</button>
+				</div>
+				<div class="hidden editForm">
+					<h3 style="margin:0px;">Edit details</h3>
+					<form action="" method="post">
+					  <div class="form-group">
+					    <label for="name">Name</label>
+					    <input type="text" class="form-control" id="name" placeholder="Name" name="name" value="" required>
+					  </div>
+					  <div class="form-group">
+					    <label for="email">Email</label>
+					    <input type="email" class="form-control" id="email" placeholder="Email" name="email" value="">
+					  </div>
+					  <div class="form-group">
+					    <label for="phone">Phone</label>
+					    <input type="tel" id="phone" class="form-control" placeholder="phone" name="phone" value="" required="">
+					  </div>
+					  <div class="form-group">
+					    <label for="address">Address</label>
+					    <input type="address" id="address" class="form-control" placeholder="Address" name="address" value="">
+					  </div>
+					  <div class="form-group">
+					  	<label>Sex</label>
+					    <label>
+					      <input type="radio" name="sex" value="male" class="male"> Male
+					    </label>
+					    <label>
+					      <input type="radio" name="sex" value="female" class="female"> Female
+					    </label>
+					  </div>
+					  <button class="submitEdit btn btn-primary">Update</button>
+					</form>
+				</div>
+	    </div>
+			
+		</div>
+	</div>
+</body>
+<script src="jquery-2.2.3.min.js" type="text/javascript"></script>
+<script src="bootstrap/bootstrap.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var $contacts = [{name: 'John Doe', email: 'johndoe@example.com', phone: '08044444444', address: 'Lagos', sex: 'male'}];
+    function refresh($arr) {
+    	$("table.contactTable tbody").empty();
+    	$contains = false;
+    	$sn = 1;
+    	$($arr).each(function($index,$val) {
+    		if($val != '') {
+    			$contains = true;
+    			$("table.contactTable tbody").append(
+						"<tr id='"+$index+"'>"+
+							"<td class='sn'>"+ $sn +"</td>"+
+							"<td title='click to view details'><a class='view'>"+$val.name+"</a></td>"+
+							"<td><button class='delete btn btn-danger'>Delete</button></td>"+
+						+"</tr>"
+					);
+					$sn++;
+    		}
+    	})
+    	if(!$contains) {
+    		$("p.empty").removeClass('hidden');
+    		$("table.contactTable").addClass('hidden');
+    	}else{
+    		$("p.empty").addClass('hidden');
+    		$("table.contactTable").removeClass('hidden');
+    	}
+    }
+    refresh($contacts);
+		$(document).on('click', "button.submit", function(e) {
+			e.preventDefault();
+			var $person = {
+				"name" : $("input[name='name']").val(),
+				"email" : $("input[name='email']").val(),
+				"phone" : $("input[name='phone']").val(),
+				"address" : $("input[name='address']").val(),
+				"sex" : $("input[name='sex']").filter(':checked').val()
+			};
+			$contacts.push($person);
+			refresh($contacts);
+			$("a[href='#contactList']").click();
+		}).on('click', "a.view", function(e) {
+			e.preventDefault();
+			$('div.editForm').addClass('hidden');
+			$('div.viewContact').removeClass('hidden');
+			var $index = $(this).parents('tr').attr('id');
+			$('button.edit').data('index', $index);
+			$('caption.contact-name').text($contacts[$index].name);
+			$("table.contactView td.phone").text($contacts[$index].phone);
+			$("table.contactView td.email").text($contacts[$index].email);
+			$("table.contactView td.address").text($contacts[$index].address);
+			$("table.contactView td.sex").text($contacts[$index].sex);
+		}).on('click', "button.edit", function(e) {
+			$('div.editForm').removeClass('hidden');
+			$('div.viewContact').addClass('hidden');
+			$index = $(this).data('index');
+			//console.log($index);
+			$("div.editForm form input[name=name]").val($contacts[$index].name);
+			$("div.editForm form input[name=email]").val($contacts[$index].email);
+			$("div.editForm form input[name=phone]").val($contacts[$index].phone);
+			$("div.editForm form input[name=address]").val($contacts[$index].address);
+			$sex = $contacts[$index].sex;
+			if($sex == 'male') {
+				$("div.editForm form input.male").attr('checked', 'checked');
+			}
+			if($sex == 'female') {
+				$("div.editForm form input.female").attr('checked', 'checked');
+			}
+		}).on('click', "button.delete", function(e) {
+			$('div.editForm').addClass('hidden');
+			$('div.viewContact').addClass('hidden');
+			var $index = $(this).parents('tr').attr('id');
+			$contacts[$index] = '';
+			$("p.message").text("Contact deleted").fadeIn('fast').fadeOut('5000');
+			//refresh table after delete
+			refresh($contacts);
+		}).on('click', "button.submitEdit", function(e) {
+			e.preventDefault();
+			$index = $("button.edit").data('index');
+			var $person2 = {
+				"name" : $("div.editForm form input[name='name']").val(),
+				"email" : $("div.editForm form input[name='email']").val(),
+				"phone" : $("div.editForm form input[name='phone']").val(),
+				"address" : $("div.editForm form input[name='address']").val(),
+				"sex" : $("div.editForm form input[name='sex']").filter(':checked').val()
+			};
+			$contacts[$index] = $person2;
+			$('div.editForm').addClass('hidden');
+			$("p.message").text("Contact details updated").fadeIn('fast').fadeOut('5000');
+			refresh($contacts);
+		})
+	})
+</script>
+</html>
